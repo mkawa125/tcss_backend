@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Ramsey\Uuid\Uuid;
+use Emadadly\LaravelUuid\Uuids;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Uuids;
 
 
     /**
@@ -23,7 +24,7 @@ class User extends Authenticatable
 
     protected $keyType = 'string';
 
-    protected $incrementing = false;
+    public $incrementing = false;
 
     protected $fillable = [
         'name', 'email', 'password', 'fullName','surname', 'middleName', 'role', 'is_changed',
