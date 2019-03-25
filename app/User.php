@@ -5,18 +5,29 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+    protected $table = 'users';
+
+    protected $primaryKey = 'id';
+
+    protected $keyType = 'string';
+
+    protected $incrementing = false;
+
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'fullName','surname', 'middleName', 'role', 'is_changed',
+        'phoneNumber'
     ];
 
     /**
