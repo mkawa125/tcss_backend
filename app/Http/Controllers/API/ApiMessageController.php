@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use Emadadly\LaravelUuid\Uuids;
 
 class ApiMessageController extends Controller
 {
@@ -37,16 +38,16 @@ class ApiMessageController extends Controller
     public function store(Request $request)
     {
         $message = new Message();
-        $message->fullNames = $request->input('fullNames');
-        $message->message_body	 = $request->input('messageBody');
-        $message->email_address = $request->input('emailAddress');
-        $message->status = 0;
-        $message->subject = $request->input('subject');
-        $message->fullNames = $request->input('fullNames');
+        $message['fullNames'] = $request->input('fullNames');
+        $message['message_body']	 = $request->input('messageBody');
+        $message['email_address'] = $request->input('emailAddress');
+        $message['status'] = 0;
+        $message['subject'] = $request->input('messageSubject');
         $message->save();
         return response()->json([
-           'success' => true,
-            'message' => 'message sent'
+            'success' => true,
+            'message' => 'message sent',
+            'body' => $message,
         ]);
     }
 

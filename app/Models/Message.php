@@ -2,21 +2,20 @@
 
 namespace App\Models;
 
-use Emadadly\LaravelUuid\Uuids;
+
 use Illuminate\Database\Eloquent\Model;
 
-
+use Emadadly\LaravelUuid\Uuids;
 class Message extends Model
 {
     use Uuids;
+    public $incrementing = false;
 
     protected $table = 'messages';
 
-    protected $keyType = 'string';
-
     protected $primaryKey = 'id';
 
-    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'message_body',
