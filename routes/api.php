@@ -16,8 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::middleware(['cors'])->group(function (){
-    Route::post('contacts', 'Users/messageController@contactMessage')->name('contact-us');
-    //Route::post('/sendMessage', 'Users/MessageController@contactMessage')->name('sendMessage');
+Route::namespace('API')->prefix('v1')->group(function () {
+    Route::middleware(['cors'])->group(function (){
+        Route::post('contacts', 'Users\messageController@contactMessage')->name('contact-us');
+        Route::post('/sendMessage', 'ApiMessageController@store')->name('sendMessage');
+    });
 });
 
