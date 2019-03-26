@@ -16,4 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('contacts', 'Users/messageController@contactMessage')->name('contact-us');
+Route::middleware(['cors'])->group(function (){
+    Route::post('contacts', 'Users/messageController@contactMessage')->name('contact-us');
+    //Route::post('/sendMessage', 'Users/MessageController@contactMessage')->name('sendMessage');
+});
+
