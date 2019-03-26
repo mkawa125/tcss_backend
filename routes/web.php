@@ -27,6 +27,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-//send message  end point
-Route::post('sendMessage', 'users/messageController@sendMessage');
+Route::middleware(['cors'])->group(function (){
+    Route::post('contacts', 'Users\messageController@contactMessage')->name('contact-us');
+    Route::post('/sendMessage', 'Users\ApiMessageController@store')->name('sendMessage');
+});
