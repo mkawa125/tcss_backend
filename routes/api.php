@@ -18,8 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::namespace('API')->prefix('v1')->group(function () {
     Route::middleware(['cors'])->group(function (){
+        Auth::routes();
         Route::post('contacts', 'Users\messageController@contactMessage')->name('contact-us');
         Route::post('/sendMessage', 'ApiMessageController@store')->name('sendMessage');
+        Route::post('login', 'API\UserController@login');
+        Route::post('register', 'API\UserController@register');
     });
 });
 
