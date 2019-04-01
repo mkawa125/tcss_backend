@@ -4,11 +4,12 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Validator;
-use JWTAuth;
-use Tymon\JWTAuth\Facades\JWTFactory;
-use JWTException;
 use App\Models\User;
+use Illuminate\Support\Facades\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Validator;
+
 class ApiLoginController extends Controller
 {
     public function login(Request $request){
