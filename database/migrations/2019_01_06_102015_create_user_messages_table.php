@@ -14,10 +14,11 @@ class CreateUserMessagesTable extends Migration
     public function up()
     {
         Schema::create('user_messages', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->unique();
+            $table->primary('id');
             $table->timestamps();
-            $table->string('full_names');
-            $table->string('email');
+            $table->string('fullNames');
+            $table->string('email_address');
             $table->string('subject');
             $table->text('message_body');
         });

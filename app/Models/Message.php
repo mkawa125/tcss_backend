@@ -11,7 +11,7 @@ class Message extends Model
     use Uuids;
     public $incrementing = false;
 
-    protected $table = 'messages';
+    protected $table = 'user_messages';
 
     protected $primaryKey = 'id';
 
