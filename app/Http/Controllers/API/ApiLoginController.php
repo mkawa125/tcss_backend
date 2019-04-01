@@ -18,7 +18,7 @@ class ApiLoginController extends Controller
             'password'=> 'required'
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 401);
         }
         $credentials = $request->only('email', 'password');
         try {
@@ -29,7 +29,10 @@ class ApiLoginController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
         return response()->json([
-            'error' => false
-        ]);
+            'error' => false,
+            'message' => 'login successfully',
+            'user' => $request->all(),
+            'token' => $token
+        ], 200);
     }
 }
