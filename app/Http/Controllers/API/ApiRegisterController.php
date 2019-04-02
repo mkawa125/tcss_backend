@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Response;
-use JWTAuth;
-use JWTFactory;
-use Validator;
-
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
+use Illuminate\Support\Facades\Validator;
 
 class ApiRegisterController extends Controller
 {

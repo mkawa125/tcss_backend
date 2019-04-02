@@ -41,7 +41,6 @@ class ApiMessageController extends Controller
         $message['fullNames'] = $request->input('fullNames');
         $message['message_body']	 = $request->input('messageBody');
         $message['email_address'] = $request->input('emailAddress');
-        $message['status'] = 0;
         $message['subject'] = $request->input('messageSubject');
         $message->save();
         return response()->json([
