@@ -35,4 +35,9 @@ class ApiLoginController extends Controller
             'token' => $token
         ], 200);
     }
+    public function logout(Request $request){
+        $token = JWTAuth::getToken();
+        JWTAuth::invalidate($token);
+        return response()->json(['message' => 'The token has been blacklisted'], 200);
+    }
 }

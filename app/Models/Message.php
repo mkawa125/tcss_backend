@@ -22,7 +22,6 @@ class Message extends Model
         'email_address',
         'subject',
         'fullNames',
-        'status',
     ];
 
     protected $casts = [
