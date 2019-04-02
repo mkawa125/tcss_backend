@@ -28,16 +28,25 @@ class ApiLoginController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-        return response()->json([
-            'error' => false,
-            'message' => 'login successfully',
-            'user' => $request->all(),
-            'token' => $token
-        ], 200);
+        return response()->json(['token' => $token]);
     }
     public function logout(Request $request){
-        $token = JWTAuth::getToken();
-        JWTAuth::invalidate($token);
-        return response()->json(['message' => 'The token has been blacklisted'], 200);
+        // Get JWT Token from the request header key "Authorization"
+        $token = $request->header('Authorization');
+        // Invalidate the token
+        try {
+            JWTAuth::unsetToken($token);
+            return response()->json([
+                'status' => 'success',
+                'message'=> "User successfully logged out."
+            ]);
+        } catch (JWTException $e) {
+            // something went wrong whilst attempting to encode the token
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Failed to logout, please try again.',
+                'token'=> $token
+            ], 500);
+        }
     }
 }
