@@ -26,6 +26,7 @@ Route::namespace('API')->prefix('v1')->group(function () {
         Route::post('/sendMessage', 'ApiMessageController@store')->name('sendMessage');
         Route::post('login', 'ApiLoginController@login');
         Route::post('register', 'ApiRegisterController@register');
+        ROute::get('/logout', 'ApiLoginController@logout');
     });
 });
 
