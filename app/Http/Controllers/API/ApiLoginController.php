@@ -28,7 +28,11 @@ class ApiLoginController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-        return response()->json(['token' => $token]);
+        return Response::json([
+            'token' => $token,
+             'user' => auth()->user(),
+            ]
+        );
     }
     public function logout(Request $request){
         // Get JWT Token from the request header key "Authorization"
