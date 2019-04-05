@@ -27,7 +27,7 @@ class School extends Model
         'updated_at',
     ];
 
-    public function student(){
+    public function students(){
         $this->hasMany(Student::class);
     }
 

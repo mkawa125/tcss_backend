@@ -4,6 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\School;
+use App\Http\Resources\School as SchoolResource;
+use Illuminate\Support\Facades\Validator;
 
 class ApiSchoolController extends Controller
 {
@@ -14,7 +17,14 @@ class ApiSchoolController extends Controller
      */
     public function index()
     {
-        //
+        $schools = School::query()->orderBy('name', 'asc')
+            ->with('students')
+            ->get();
+        return response([
+            'success'=> true,
+            'message' => 'schools retrieved',
+            'schools' => SchoolResource::collection($schools)
+        ]);
     }
 
     /**
@@ -27,15 +37,19 @@ class ApiSchoolController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), School::rules());
+        if ($validator->fails()){
+            return response()->json($validator->errors(), 401 );
+        }else{
+            $school = School::create($request->all());
+            return response()->json([
+                'error' => false,
+                'message' => 'school successfully created',
+                'school' => SchoolResource::collection($school)
+            ], 201);
+        }
     }
 
     /**
