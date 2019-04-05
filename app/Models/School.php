@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Staff;
+use App\Models\Student;
+use App\Models\User;
 
 class School extends Model
 {
@@ -14,13 +17,33 @@ class School extends Model
         'ward',
         'district',
         'ownership',
-        'school_type',
-        'date_started',
-        'gender_orientation'
+        'schoolType',
+        'dateStarted',
+        'genderOrientation'
     ];
 
     protected $casts = [
         'created_at',
         'updated_at',
     ];
+
+    public function student(){
+        $this->hasMany(Student::class);
+    }
+
+    public function staffs(){
+        $this->hasMany(Staff::class);
+    }
+
+    public function school(){
+        $this->belongsTo(School::class);
+    }
+
+    public function rules(){
+        return [
+          'regNumber' => 'required',
+            'name' => 'required',
+            'schoolType' => 'required'
+        ];
+    }
 }
