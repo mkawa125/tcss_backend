@@ -47,7 +47,8 @@ class ApiSchoolController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'school successfully created',
-                'school' => SchoolResource::collection($school)
+//                'school' => SchoolResource::collection($school)
+                'school' => $school,
             ], 201);
         }
     }

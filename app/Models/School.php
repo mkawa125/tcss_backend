@@ -6,9 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Staff;
 use App\Models\Student;
 use App\Models\User;
+use Emadadly\LaravelUuid\Uuids;
 
 class School extends Model
 {
+    use Uuids;
+
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
+    protected $table = 'schools';
     protected $fillable = [
         'regNumber',
         'name',
@@ -39,11 +45,19 @@ class School extends Model
         $this->belongsTo(School::class);
     }
 
-    public function rules(){
+    public static function rules(){
         return [
-          'regNumber' => 'required',
-            'name' => 'required',
-            'schoolType' => 'required'
+            'regNumber' => 'required|unique:schools',
+            'name' => 'required|string',
+            'schoolType' => 'required',
+            'level' => 'required',
+            'region' => 'required',
+            'district' => 'required',
+            'ward' => 'required',
+            'dateStarted' => 'required:date',
+            'ownership' => 'required',
+            'genderOrientation' => 'required',
+
         ];
     }
 }

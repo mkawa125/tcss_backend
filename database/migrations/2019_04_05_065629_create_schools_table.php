@@ -16,16 +16,16 @@ class CreateSchoolsTable extends Migration
         Schema::create('schools', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
-            $table->string('reNumber');
+            $table->string('regNumber')->unique();
             $table->string('name');
             $table->string('level');
             $table->string('region');
             $table->string('district');
             $table->string('ward');
-            $table->string('date_started');
-            $table->string('school_type');
+            $table->string('dateStarted');
+            $table->string('schoolType');
             $table->string('ownership');
-            $table->string('gender_orientation');
+            $table->string('genderOrientation');
             $table->timestamps();
         });
     }
