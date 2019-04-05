@@ -27,6 +27,10 @@ Route::namespace('API')->prefix('v1')->group(function () {
         Route::post('login', 'ApiLoginController@login');
         Route::post('register', 'ApiRegisterController@register');
         ROute::get('/logout', 'ApiLoginController@logout');
+
+        //schools routes
+        Route::get('/schools', 'ApiSchoolController@index');
+        Route::post('/schools', 'ApiSchoolController@store');
     });
 });
 
