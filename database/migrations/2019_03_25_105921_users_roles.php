@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserMessagesTable extends Migration
+class UsersRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateUserMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_messages', function (Blueprint $table) {
+        schema::create('roles' , function (Blueprint $table){
             $table->uuid('id')->unique();
             $table->primary('id');
-            $table->timestamps();
-            $table->string('fullNames');
-            $table->string('email_address');
-            $table->string('subject');
-            $table->text('message_body');
+            $table->string('role_name');
         });
     }
 
@@ -31,6 +27,6 @@ class CreateUserMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_messages');
+        //
     }
 }

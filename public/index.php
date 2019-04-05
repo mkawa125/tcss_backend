@@ -6,6 +6,9 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
+//header('Access-Control-Allow-Origin: http://localhost:4200');
+//header('Access-Control-Allow-Method: GET, POST');
+//header('Access-Control-Headers: Origin, X-requested-width, Content-Type, X-Auth-Token, X-xsrf-token, enctype, X-Requested-with, x_csrftoken');
 
 define('LARAVEL_START', microtime(true));
 
