@@ -85,9 +85,20 @@ class ApiSchoolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, School $school)
     {
-        //
+        $validator = Validator::make($request->all(), School::rules());
+        if ($validator->fails()){
+            return response($validator->errors(), 404);
+        }else{
+            School::query()->where('id', $school->id)->update($request->all());
+            $school->refresh();
+            return response()->json([
+                'error' => false,
+                'message' => 'school updated',
+                'school' => new SchoolResource($school),
+            ], 201);
+        }
     }
 
     /**
