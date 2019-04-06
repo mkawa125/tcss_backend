@@ -68,17 +68,6 @@ class ApiSchoolController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -91,7 +80,7 @@ class ApiSchoolController extends Controller
         if ($validator->fails()){
             return response($validator->errors(), 404);
         }else{
-            School::query()->where('id', $school->id)->update($request->all());
+            School::query()->where('id', $school['id'])->update($request->all());
             $school->refresh();
             return response()->json([
                 'error' => false,
@@ -107,8 +96,16 @@ class ApiSchoolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        School::query()->where('id', $request->school)->delete();
+        $schools = School::query()->orderBy('name', 'asc')
+//            ->with('students')
+            ->get();
+        return response([
+            'success'=> true,
+            'message' => 'schools deleted',
+            'schools' => SchoolResource::collection($schools)
+        ]);
     }
 }

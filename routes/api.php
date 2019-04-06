@@ -33,6 +33,7 @@ Route::namespace('API')->prefix('v1')->group(function () {
         Route::post('/schools', 'ApiSchoolController@store');
         ROute::post('/schools/{school}', 'ApiSchoolController@show');
         ROute::post('/updateSchools/{school}', 'ApiSchoolController@update');
+        Route::delete('/schools/{school}', 'ApiSchoolController@destroy');
 
     });
 });
