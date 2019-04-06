@@ -31,6 +31,7 @@ Route::namespace('API')->prefix('v1')->group(function () {
         //schools routes
         Route::get('/schools', 'ApiSchoolController@index');
         Route::post('/schools', 'ApiSchoolController@store');
+        ROute::post('/schools/{school}', 'ApiSchoolController@show');
     });
 });
 

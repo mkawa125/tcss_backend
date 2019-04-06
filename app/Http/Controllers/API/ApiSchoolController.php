@@ -18,7 +18,7 @@ class ApiSchoolController extends Controller
     public function index()
     {
         $schools = School::query()->orderBy('name', 'asc')
-            ->with('students')
+//            ->with('students')
             ->get();
         return response([
             'success'=> true,
@@ -58,9 +58,13 @@ class ApiSchoolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(School $school)
     {
-        //
+        return response([
+            'error' => false,
+            'message' => 'success',
+            'school' => new SchoolResource($school)
+        ], 201);
     }
 
     /**
@@ -71,7 +75,7 @@ class ApiSchoolController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
