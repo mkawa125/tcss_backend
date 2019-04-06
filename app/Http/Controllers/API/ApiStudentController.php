@@ -11,11 +11,6 @@ use App\Models\User;
 
 class ApiStudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $students = Student::query()->orderBy('indexNumber', 'asc')->get();
@@ -110,16 +105,32 @@ class ApiStudentController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Student $student)
     {
-        //
+        $user_validator = Validator::make($request->all(), User::rules());
+        if ($user_validator->fails()){
+            return response($user_validator->errors(), 404);
+        }else{
+            $user = $request->all();
+            $user['role'] = User::USER_ROLE_STUDENT;
+            $user['is_changed'] = false;
+            $user['name'] = $request->get('firstName').'  '.$request->get('surname');
+            $user['password'] = bcrypt($request->input('surname'));
+            $user_id = User::query()->where('id', $user['id'])->update($request->all());
+            if ($user_id){
+                $student_validator = Validator::make($request->all(), Student::rules());
+                if (!$student_validator){
+                    return response()->json($student_validator->errors());
+                }else{
+                    Student::query()->where('userId', '=', $student['id'])->update($user);
+                    return response()->json([
+                        'error' => false,
+                        'message' => 'school updated',
+                        'school' => new StudentResource($student),
+                    ], 201);
+                }
+            }
+        }
     }
 
     /**

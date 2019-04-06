@@ -39,7 +39,7 @@ Route::namespace('API')->prefix('v1')->group(function () {
         Route::get('/students', 'ApiStudentController@index');
         Route::post('/students', 'ApiStudentController@store');
         Route::post('/students/{student}', 'ApiStudentController@show');
-        Route::post('/UpdateStudents', 'ApiStudentController@update');
+        Route::post('/UpdateStudents/{student}', 'ApiStudentController@update');
         Route::delete('/students/{student}', 'ApiStudentController@destroy');
 
     });
