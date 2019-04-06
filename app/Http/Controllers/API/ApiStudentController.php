@@ -68,7 +68,7 @@ class ApiStudentController extends Controller
                 if (!$student_validator){
                     return response()->json($student_validator->errors(), 401);
                 }else{
-                    Student::create($student);
+                    $student = Student::create($student);
                     return response()->json([
                         'error' => false,
                         'message' => 'student created',
@@ -90,9 +90,13 @@ class ApiStudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Student $student)
     {
-
+        return response([
+            'error' => false,
+            'message' => 'success',
+            'school' => new StudentResource($student),
+        ]);
     }
 
     /**
