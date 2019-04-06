@@ -15,6 +15,7 @@ class School extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     protected $table = 'schools';
+    public $incrementing = false;
     protected $fillable = [
         'regNumber',
         'name',
