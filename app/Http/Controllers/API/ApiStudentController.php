@@ -16,13 +16,19 @@ class ApiStudentController extends Controller
      */
     public function index()
     {
-        $students = Student::query()->orderBy('name', 'asc')
-            ->get();
-        return response()->json([
-           'error' => false,
-            'message' => 'message successfully retrieved',
-            'students' => StudentResource::collection($students)
-        ], 201);
+        $students = Student::query()->orderBy('indexNumber', 'asc')->get();
+        if (count($students) == 0){
+            return response()->json([
+                'error' => false,
+                'message' => 'No students yet',
+            ], 201);
+        }else{
+            return response()->json([
+                'error' => false,
+                'message' => 'message successfully retrieved',
+                'students' => StudentResource::collection($students)
+            ], 201);
+        }
     }
 
     /**
