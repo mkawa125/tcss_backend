@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\School;
 use App\Models\User;
+use Emadadly\LaravelUuid\Uuids;
 
 class Student extends Model
 {
+    use Uuids;
     protected $fillable = [
         'userId',
         'indexNumber',
@@ -22,6 +24,8 @@ class Student extends Model
         'created_at',
         'updated_at',
     ];
+    protected $keyType = 'string';
+    protected $primaryKey = 'id';
 
     public function school(){
         $this->belongsTo(School::class);
@@ -29,5 +33,16 @@ class Student extends Model
 
     public function user(){
         $this->belongsTo(User::class);
+    }
+    public static function rules(){
+        return [
+            'userId' => 'required',
+            'indexNumber' => 'required',
+            'schoolId' => 'required',
+            'level' => 'required',
+            'dateStarted' => 'required',
+            'status' => 'required',
+            'dateFinished' => 'required',
+        ];
     }
 }

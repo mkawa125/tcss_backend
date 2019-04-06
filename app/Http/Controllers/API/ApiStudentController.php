@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Student as StudentResource;
 use App\Models\Student;
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class ApiStudentController extends Controller
 {
@@ -25,7 +27,7 @@ class ApiStudentController extends Controller
         }else{
             return response()->json([
                 'error' => false,
-                'message' => 'message successfully retrieved',
+                'message' => 'students successfully retrieved',
                 'students' => StudentResource::collection($students)
             ], 201);
         }
@@ -49,7 +51,37 @@ class ApiStudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user_validator = Validator::make($request->all(), User::rules());
+        if (!$user_validator){
+            return response()->json($user_validator->errors(), 401);
+        }else{
+            $user = $request->all();
+            $user['role'] = User::USER_ROLE_STUDENT;
+            $user['is_changed'] = false;
+            $user['name'] = $request->get('firstName').'  '.$request->get('surname');
+            $user['password'] = bcrypt($request->input('surname'));
+            $user_id = User::create($user)->id;
+            if ($user_id){
+                $student = $request->all();
+                $student['userId'] = $user_id;
+                $student_validator = Validator::make($request->all(), Student::rules());
+                if (!$student_validator){
+                    return response()->json($student_validator->errors(), 401);
+                }else{
+                    Student::create($student);
+                    return response()->json([
+                        'error' => false,
+                        'message' => 'student created',
+                        'students' => new StudentResource($student),
+                    ]);
+                }
+            }else{
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Failed to create student'
+                ], 500);
+            }
+        }
     }
 
     /**
@@ -60,7 +92,7 @@ class ApiStudentController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
