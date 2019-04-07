@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
             'phoneNumber' => '+255717495198',
             'password' => bcrypt('123456789'),
             'role' => 'Admin',
-            'is_changed' => false,
+            'is_changed' => 0,
         ]);
     }
 }
