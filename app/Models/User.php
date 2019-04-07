@@ -64,6 +64,14 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    //defining constants
+    const USER_ROLE_STUDENT = 'Student';
+    const USER_ROLE_ADMIN = 'Admin';
+    const USER_ROLE_TEACHER = 'Teacher';
+    const USER_ROLE_HEADMASTER = 'Headmaster';
+
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -77,5 +85,17 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public static function rules(){
+        return [
+            'email' => 'required|email',
+            'firstName' => 'required',
+            'middleName' => 'required',
+            'surname' => 'required',
+            'role' => 'required',
+            'is_changed' => 'required',
+            'password' => 'required',
+        ];
     }
 }

@@ -18,7 +18,7 @@ class ApiSchoolController extends Controller
     public function index()
     {
         $schools = School::query()->orderBy('name', 'asc')
-            ->with('students')
+//            ->with('students')
             ->get();
         return response([
             'success'=> true,
@@ -47,8 +47,7 @@ class ApiSchoolController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'school successfully created',
-//                'school' => SchoolResource::collection($school)
-                'school' => $school,
+                'school' => new SchoolResource($school),
             ], 201);
         }
     }
@@ -59,20 +58,13 @@ class ApiSchoolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(School $school)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response([
+            'error' => false,
+            'message' => 'success',
+            'school' => new SchoolResource($school)
+        ], 201);
     }
 
     /**
@@ -82,9 +74,20 @@ class ApiSchoolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, School $school)
     {
-        //
+        $validator = Validator::make($request->all(), School::rules());
+        if ($validator->fails()){
+            return response($validator->errors(), 404);
+        }else{
+            School::query()->where('id', $school['id'])->update($request->all());
+            $school->refresh();
+            return response()->json([
+                'error' => false,
+                'message' => 'school updated',
+                'school' => new SchoolResource($school),
+            ], 201);
+        }
     }
 
     /**
@@ -93,8 +96,16 @@ class ApiSchoolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        School::query()->where('id', $request->school)->delete();
+        $schools = School::query()->orderBy('name', 'asc')
+//            ->with('students')
+            ->get();
+        return response([
+            'success'=> true,
+            'message' => 'schools deleted',
+            'schools' => SchoolResource::collection($schools)
+        ]);
     }
 }

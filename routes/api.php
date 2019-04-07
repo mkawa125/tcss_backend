@@ -31,6 +31,17 @@ Route::namespace('API')->prefix('v1')->group(function () {
         //schools routes
         Route::get('/schools', 'ApiSchoolController@index');
         Route::post('/schools', 'ApiSchoolController@store');
+        ROute::post('/schools/{school}', 'ApiSchoolController@show');
+        ROute::post('/updateSchools/{school}', 'ApiSchoolController@update');
+        Route::delete('/schools/{school}', 'ApiSchoolController@destroy');
+
+        //students routes
+        Route::get('/students', 'ApiStudentController@index');
+        Route::post('/students', 'ApiStudentController@store');
+        Route::post('/students/{student}', 'ApiStudentController@show');
+        Route::post('/UpdateStudents/{student}', 'ApiStudentController@update');
+        Route::delete('/students/{student}', 'ApiStudentController@destroy');
+
     });
 });
 
