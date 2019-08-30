@@ -23,8 +23,8 @@ class ApiSchoolController extends Controller
         return response([
             'success'=> true,
             'message' => 'schools retrieved',
-            'schools' => SchoolResource::collection($schools)
-        ]);
+            'data' => SchoolResource::collection($schools)
+        ], 200);
     }
 
     /**
@@ -47,7 +47,7 @@ class ApiSchoolController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'school successfully created',
-                'school' => new SchoolResource($school),
+                'data' => new SchoolResource($school),
             ], 201);
         }
     }
@@ -63,7 +63,7 @@ class ApiSchoolController extends Controller
         return response([
             'error' => false,
             'message' => 'success',
-            'school' => new SchoolResource($school)
+            'data' => new SchoolResource($school)
         ], 201);
     }
 
@@ -85,7 +85,7 @@ class ApiSchoolController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'school updated',
-                'school' => new SchoolResource($school),
+                'data' => new SchoolResource($school),
             ], 201);
         }
     }
@@ -105,7 +105,7 @@ class ApiSchoolController extends Controller
         return response([
             'success'=> true,
             'message' => 'schools deleted',
-            'schools' => SchoolResource::collection($schools)
+            'data' => SchoolResource::collection($schools)
         ]);
     }
 }
