@@ -18,10 +18,7 @@ Route::middleware('auth:api', 'jwt.auth')->get('/user', function (Request $reque
 });
 
 Route::namespace('API')->prefix('v1')->group(function () {
-    Route::middleware(['cors'])->group(function (){
-        Route::middleware('jwt.auth')->get('users', function(Request $request) {
-            return auth()->user();
-        });
+    Route::middleware(['cors', 'jwt.auth'])->group(function (){
         Route::post('contacts', 'Users\messageController@contactMessage')->name('contact-us');
         Route::post('/sendMessage', 'ApiMessageController@store')->name('sendMessage');
         Route::post('login', 'ApiLoginController@login');
