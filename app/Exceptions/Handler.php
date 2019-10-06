@@ -46,6 +46,23 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        if (starts_with(request()->path(), 'api')) {
+            if (! $request->bearerToken()){
+                return response()->json([
+                    'userMessage' => $exception->getMessage(),
+                    'developerMessage' => 'No Authentication token, please add token the request header',
+                ], 401);
+            }else{
+                if($exception instanceof \Illuminate\Auth\AuthenticationException ){
+                    return response()->json([
+                        'userMessage' => $exception->getMessage(),
+                        'developerMessage' => 'The token is either expired or invalid',
+                    ],401);
+                }
+            }
+            return parent::render($request, $exception);
+        }else{
+            return parent::render($request, $exception);
+        }
     }
 }
